@@ -3,6 +3,7 @@
 /ncc-dist
 /node_modules
 .env
+.env.local
 # Logs
 logs
 *.log
