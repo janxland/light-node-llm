@@ -26,7 +26,7 @@ import { Tools } from './tools';
     async predictStream(@Body() req: PredictRequest, @Res() res: Response) {
       try {
         // 构造消息
-        const messages = [
+        let messages = [
           {
             role: 'system',
             content:
@@ -34,11 +34,11 @@ import { Tools } from './tools';
           },
           {
             role: 'system',
-            content: `解读用户需求，你需要写JavaScript代码才能调用底层，你能调用的API不限于,你要用run_js_code工具调用以下函数：${req.baseAPIHandler}`,
+            content: `解读用户需求【如果明确需要执行代码就不要输出其他文本】，你需要写JavaScript代码才能调用底层，你能调用的API不限于,你要用run_js_code工具调用以下函数：${req.baseAPIHandler}`,
           },
           { role: 'user', content: req.input_text },
         ];
-        
+        messages = [ ...messages, ...req.messages ]
         res.status(HttpStatus.OK);
         
         const result = this.llmService.predictStream(messages, new Tools().tools);

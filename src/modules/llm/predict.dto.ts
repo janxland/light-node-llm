@@ -9,4 +9,5 @@ export class PredictRequest {
 
   @IsString()
   baseAPIHandler: string;
+  stream: boolean;
 }
